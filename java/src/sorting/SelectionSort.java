@@ -26,12 +26,7 @@ public class SelectionSort {
 	public void testSort() {
 		int[] test = {1,5,3,7,8,4,2};
 		
-		test = SelectionSort.sort(test, new Comparator<Integer>() {
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return Integer.signum(o1 - o2);
-			}
-		});
+		test = SelectionSort.sort(test, new Utils.IntegerComparator());
 		
 		Assert.assertTrue(Utils.isSorted(test));
 	}

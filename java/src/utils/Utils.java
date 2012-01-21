@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class Utils {
@@ -23,7 +26,28 @@ public class Utils {
 		return true;
 	}
 	
+	public static <T> boolean isSorted(Collection<T> collection, Comparator<T> cmp) {
+		Iterator<T> iter = collection.iterator();
+		T previous = iter.next();
+		T current = null;
+		
+		while(iter.hasNext()) {
+			current = iter.next();
+			if(cmp.compare(previous, current) > 0) {
+				return false;
+			}
+			previous = current;
+		}
+		
+		return true;
+	}
 	
+	public static class IntegerComparator implements Comparator<Integer> {
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			return Integer.signum(o1 - o2);
+		}
+	}
 }
 
 
