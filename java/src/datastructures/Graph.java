@@ -17,8 +17,8 @@ public class Graph {
 		nodes.add(index, new LinkedList<Edge>());
 	}
 	
-	public void addNodes(int... indecies) {
-		for(int index : indecies) {
+	public void addNodes(int... indices) {
+		for(int index : indices) {
 			addNode(index);
 		}
 	}
