@@ -8,7 +8,7 @@ import org.junit.Test;
 import datastructures.Edge;
 import datastructures.Graph;
 
-class BFS {
+class DFS {
 	private Graph graph;
 	private int[] state;
 	private int[] parent;
@@ -17,7 +17,7 @@ class BFS {
 	private static final int DISCOVERED = 1;
 	private static final int PROCESSED = 2;
 	
-	public BFS(Graph g) {
+	public DFS(Graph g) {
 		graph = g;
 		state = new int[g.getSize()];
 		parent = new int[g.getSize()];
@@ -25,33 +25,28 @@ class BFS {
 	}
 	
 	public void process() {
-		bfs(0);
+		dfs(0);
+		parent[0] = 0;
 	}
 	
-	private void bfs(int index) {
-		LinkedList<Integer> queue = new LinkedList<Integer>();
-		queue.add(index);
-		parent[index] = index;
+	private void dfs(int index) {
+		LinkedList<Edge> neighbours = graph.getEdges(index);
 		
-		while(!queue.isEmpty()) {
-			int node = queue.remove();
-
-			System.out.println(node);
-			
-			for(Edge e : graph.getEdges(node)) {
-				if(state[e.getNode()] == UNDISCOVERED) {
-					state[e.getNode()] = DISCOVERED;
-					parent[e.getNode()] = node;
-					queue.add(e.getNode());
-				}
+		state[index] = DISCOVERED;
+		System.out.println(index);
+				
+		for(Edge e : neighbours) {
+			if(state[e.getNode()] == UNDISCOVERED) {
+				parent[e.getNode()] = index;
+				dfs(e.getNode());
 			}
-			
-			state[node] = PROCESSED;
 		}
+		
+		state[index] = PROCESSED;
 	}
 }
 
-public class BFSTest {
+public class DFSTest {
 	@Test
 	public void testBFS() {
 		Graph g = new Graph(false);
@@ -65,6 +60,6 @@ public class BFSTest {
 		g.addEdge(5, 6);
 		g.addEdge(5, 7);
 		
-		new BFS(g).process();
+		new DFS(g).process();
 	}
 }
